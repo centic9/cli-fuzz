@@ -1,6 +1,7 @@
 .idea/
 .gradle/
 build/
+out/
 
 # the downloaded corpus should not be checked in
 corpus/
