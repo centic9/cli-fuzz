@@ -1,5 +1,7 @@
 package org.dstadler.cli.fuzz;
 
+import java.io.ByteArrayOutputStream;
+import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -72,8 +74,7 @@ public class Fuzz {
 			line.hasOption("ignore-backups");
 			line.hasOption("abc");
 			line.hasOption(options.getOptions().iterator().next());
-		}
-		catch (ParseException exp) {
+		} catch (ParseException exp) {
 			// expected here
 		}
 	}
@@ -153,8 +154,7 @@ public class Fuzz {
 			line.hasOption("D");
 			line.hasOption("abc");
 			line.hasOption(options.getOptions().iterator().next());
-		}
-		catch (ParseException exp) {
+		} catch (ParseException exp) {
 			// expected here
 		}
 	}
@@ -163,11 +163,21 @@ public class Fuzz {
 		Options options = new Options();
 
 		for (String arg : args) {
-			options.addOption(arg, "");
+			try {
+				options.addOption(arg, "");
+			} catch (IllegalArgumentException e) {
+				// expected on invalid option definitions
+			}
 		}
 
-		// automatically generate the help statement
-		HelpFormatter formatter = new HelpFormatter();
-		formatter.printHelp("ant", options);
+		PrintStream out_save = System.out;
+		try {
+			System.setOut(new PrintStream(new ByteArrayOutputStream()));
+			// automatically generate the help statement
+			HelpFormatter formatter = new HelpFormatter();
+			formatter.printHelp("ant", options);
+		} finally {
+			System.setOut(out_save);
+		}
 	}
 }
