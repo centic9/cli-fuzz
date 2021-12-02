@@ -1,4 +1,4 @@
-This is a small project for fuzzing Apache Commons CLI with the [jazzer](https://github.com/CodeIntelligenceTesting/jazzer) fuzzing tool.
+This is a small project for fuzzing [Apache Commons CLI](https://commons.apache.org/proper/commons-cli/) with the [jazzer](https://github.com/CodeIntelligenceTesting/jazzer) fuzzing tool.
 
 See [Fuzzing](https://en.wikipedia.org/wiki/Fuzzing) for a general description of the theory behind fuzzy testing.
 
@@ -8,9 +8,10 @@ focuses on the following:
 
 * verify if only expected exceptions are thrown
 * verify any JNI or native code calls 
+* find cases of unbounded memory allocations
 
 Apache Commons CLI does not use JNI or native code, therefore the fuzzing target mainly
-tries to trigger unexpected exceptions.
+tries to trigger unexpected exceptions and unbounded memory allocations.
 
 # How to fuzz
 
