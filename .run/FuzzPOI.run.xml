@@ -2,7 +2,7 @@
   <configuration default="false" name="Fuzz" type="ShConfigurationType">
     <option name="SCRIPT_TEXT" value="./gradlew shadowJar &amp;&amp; ./jazzer --cp=build/libs/cli-fuzz-all.jar --instrumentation_includes=org.apache.commons.** --target_class=org.dstadler.cli.fuzz.Fuzz -rss_limit_mb=4096 corpus" />
     <option name="INDEPENDENT_SCRIPT_PATH" value="true" />
-    <option name="SCRIPT_PATH" value="./jazzer --cp=build/libs/cli-fuzz-all.jar --target_class=org.dstadler.cli.fuzz.Fuzz -rss_limit_mb=4096 corpus" />
+    <option name="SCRIPT_PATH" value="./jazzer --cp=build/libs/cli-fuzz-all.jar --instrumentation_includes=org.apache.commons.** --target_class=org.dstadler.cli.fuzz.Fuzz -rss_limit_mb=4096 corpus" />
     <option name="SCRIPT_OPTIONS" value="" />
     <option name="INDEPENDENT_SCRIPT_WORKING_DIRECTORY" value="true" />
     <option name="SCRIPT_WORKING_DIRECTORY" value="$PROJECT_DIR$" />
