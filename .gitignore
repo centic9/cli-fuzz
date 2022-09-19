@@ -16,3 +16,4 @@ corpus/
 /Crash_*.java
 /slow-unit-*
 /oom-*
+/jazzer-linux-x86_64.tar.gz
