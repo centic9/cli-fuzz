@@ -11,11 +11,11 @@ repositories {
 dependencies {
 	implementation 'commons-cli:commons-cli:1.5.0'
 
-	implementation 'com.code-intelligence:jazzer-api:0.14.0'
+	implementation 'com.code-intelligence:jazzer-api:0.15.0'
 
 	// for configuring log4j to be silent during fuzzing
-    implementation 'org.apache.logging.log4j:log4j-core:2.19.0'
-	implementation 'org.apache.logging.log4j:log4j-slf4j-impl:2.19.0'
+    implementation 'org.apache.logging.log4j:log4j-core:2.20.0'
+	implementation 'org.apache.logging.log4j:log4j-slf4j-impl:2.20.0'
 
 	testImplementation 'org.junit.jupiter:junit-jupiter-api:5.9.2'
 	testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.9.2'
