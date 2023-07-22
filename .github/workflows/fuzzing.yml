@@ -1,0 +1,52 @@
+# This workflow will perform a fuzzer-run
+
+name: Run Fuzzing
+
+# https://github.blog/changelog/2020-07-06-github-actions-manual-triggers-with-workflow_dispatch/
+on:
+    workflow_dispatch:
+
+jobs:
+  fuzzing:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Set up JDK
+      uses: actions/setup-java@v2
+      with:
+        distribution: 'adopt'
+        java-version: '11'
+        check-latest: true
+
+    - name: Cache Gradle wrapper and dependencies
+      uses: actions/cache@v2
+      with:
+        path: |
+          ~/.gradle/caches
+          ~/.gradle/wrapper
+          ~/corpus
+        key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*') }}
+        restore-keys: |
+          ${{ runner.os }}-gradle-
+    - name: Verify Gradle wrapper
+      uses: gradle/wrapper-validation-action@v1
+
+    - name: Grant execute permission for gradlew
+      run: chmod +x gradlew
+
+    - name: Build the fuzz target
+      run: ./gradlew shadowJar
+
+    - name: Create directory for corpus
+      run: mkdir -p corpus
+      
+    - name: Fetch Jazzer
+      run: wget https://github.com/CodeIntelligenceTesting/jazzer/releases/download/v0.19.0/jazzer-linux.tar.gz
+
+    - name: Unpack Jazzer
+      run: tar xzf jazzer-*.tar.gz
+
+    - name: Run Fuzzing
+      run: ./jazzer --cp=build/libs/cli-fuzz-all.jar --instrumentation_includes=org.apache.commons.** --target_class=org.dstadler.cli.fuzz.Fuzz -rss_limit_mb=4096 corpus
