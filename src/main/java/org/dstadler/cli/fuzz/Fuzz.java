@@ -76,6 +76,9 @@ public class Fuzz {
 			line.hasOption(options.getOptions().iterator().next());
 		} catch (ParseException exp) {
 			// expected here
+		} catch (StringIndexOutOfBoundsException e) {
+			// Reported at https://issues.apache.org/jira/browse/CLI-313
+			// can be removed here when the bug is resolved
 		}
 	}
 
@@ -156,6 +159,9 @@ public class Fuzz {
 			line.hasOption(options.getOptions().iterator().next());
 		} catch (ParseException exp) {
 			// expected here
+		} catch (StringIndexOutOfBoundsException e) {
+			// Reported at https://issues.apache.org/jira/browse/CLI-313
+			// can be removed here when the bug is resolved
 		}
 	}
 
