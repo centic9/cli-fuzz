@@ -13,6 +13,7 @@ corpus/
 /jazzer-linux.tar.gz
 /jazzer_standalone.jar
 /jazzer-linux-*.tar.gz
+/jacoco-*.zip
 
 # Jazzer result/crash files
 /crash-*
