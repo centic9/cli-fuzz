@@ -3,15 +3,19 @@ package org.dstadler.cli.fuzz;
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
+import org.apache.commons.cli.BasicParser;
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.CommandLineParser;
 import org.apache.commons.cli.DefaultParser;
+import org.apache.commons.cli.GnuParser;
 import org.apache.commons.cli.HelpFormatter;
 import org.apache.commons.cli.Option;
 import org.apache.commons.cli.Options;
 import org.apache.commons.cli.ParseException;
+import org.apache.commons.cli.PosixParser;
 
 import com.code_intelligence.jazzer.api.FuzzedDataProvider;
 
@@ -39,14 +43,22 @@ public class Fuzz {
 		}
 
 		String[] argsArray = args.toArray(new String[0]);
-		check_ls(argsArray);
-		check_ant(argsArray);
+
+		//noinspection deprecation
+		for (CommandLineParser parser : new CommandLineParser[] {
+				new DefaultParser(),
+				new PosixParser(),
+				new GnuParser(),
+				new BasicParser()
+		}) {
+			check_ls(argsArray, parser);
+			check_ant(argsArray, parser);
+		}
 		check_dynamic_options(argsArray);
 	}
 
-	private static void check_ls(String[] args) {
+	private static void check_ls(String[] args, CommandLineParser parser) {
 		// create the command line parser
-		CommandLineParser parser = new DefaultParser();
 
 		// create the Options
 		Options options = new Options();
@@ -74,6 +86,22 @@ public class Fuzz {
 			line.hasOption("ignore-backups");
 			line.hasOption("abc");
 			line.hasOption(options.getOptions().iterator().next());
+
+			Iterator<Option> it = line.iterator();
+			while (it.hasNext()) {
+				Option op = it.next();
+				//noinspection ResultOfMethodCallIgnored
+				op.getLongOpt();
+				op.getValues();
+				//noinspection ResultOfMethodCallIgnored
+				op.getArgs();
+				op.getValue();
+			}
+
+			line.getOptions();
+			line.getArgs();
+			//noinspection ResultOfMethodCallIgnored
+			line.getArgList();
 		} catch (ParseException exp) {
 			// expected here
 		} catch (StringIndexOutOfBoundsException e) {
@@ -82,7 +110,7 @@ public class Fuzz {
 		}
 	}
 
-	private static void check_ant(String[] args) {
+	private static void check_ant(String[] args, CommandLineParser parser) {
 		Option help = new Option("help", "print this message");
 		Option projecthelp = new Option("projecthelp", "print project help information");
 		Option version = new Option("version", "print the version information and exit");
@@ -146,7 +174,6 @@ public class Fuzz {
 		options.addOption(property);
 
 		// create the parser
-		CommandLineParser parser = new DefaultParser();
 		try {
 			// parse the command line arguments
 			CommandLine line = parser.parse(options, args);
