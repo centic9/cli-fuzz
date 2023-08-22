@@ -33,7 +33,7 @@ public class Fuzz {
 		List<String> args = new ArrayList<>();
 		for (int i = 0;i < 100;i++) {
 			String arg = data.consumeString(100);
-			if (arg != null && arg.length() > 0) {
+			if (arg != null && !arg.isEmpty()) {
 				args.add(arg);
 			}
 		}
@@ -104,15 +104,12 @@ public class Fuzz {
 			line.getArgList();
 		} catch (ParseException exp) {
 			// expected here
-		} catch (StringIndexOutOfBoundsException e) {
-			// Reported at https://issues.apache.org/jira/browse/CLI-313
-			// can be removed here when the bug is resolved
 		}
 	}
 
 	private static void check_ant(String[] args, CommandLineParser parser) {
 		Option help = new Option("help", "print this message");
-		Option projecthelp = new Option("projecthelp", "print project help information");
+		Option projectHelp = new Option("projectHelp", "print project help information");
 		Option version = new Option("version", "print the version information and exit");
 		Option quiet = new Option("quiet", "be extra quiet");
 		Option verbose = new Option("verbose", "be extra verbose");
@@ -160,7 +157,7 @@ public class Fuzz {
 		Options options = new Options();
 
 		options.addOption(help);
-		options.addOption(projecthelp);
+		options.addOption(projectHelp);
 		options.addOption(version);
 		options.addOption(quiet);
 		options.addOption(verbose);
@@ -186,9 +183,6 @@ public class Fuzz {
 			line.hasOption(options.getOptions().iterator().next());
 		} catch (ParseException exp) {
 			// expected here
-		} catch (StringIndexOutOfBoundsException e) {
-			// Reported at https://issues.apache.org/jira/browse/CLI-313
-			// can be removed here when the bug is resolved
 		}
 	}
 
