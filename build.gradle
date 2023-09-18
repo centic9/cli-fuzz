@@ -9,8 +9,7 @@ repositories {
 }
 
 dependencies {
-	//implementation 'commons-cli:commons-cli:1.5.0'
-	implementation files('/opt/apache/commons-cli/git/target/commons-cli-1.6.0-SNAPSHOT.jar')
+	implementation 'commons-cli:commons-cli:1.5.0'
 
 	implementation 'com.code-intelligence:jazzer-api:0.20.1'
 
