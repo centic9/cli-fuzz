@@ -1,5 +1,5 @@
 plugins {
-	id 'com.github.johnrengelman.shadow' version '7.1.2'
+	id 'com.gradleup.shadow' version '8.3.0'
 }
 
 apply plugin: 'java'
@@ -14,12 +14,12 @@ dependencies {
 	implementation 'com.code-intelligence:jazzer-api:0.22.1'
 
 	// for configuring log4j to be silent during fuzzing
-    implementation 'org.apache.logging.log4j:log4j-core:2.24.0'
-	implementation 'org.apache.logging.log4j:log4j-slf4j-impl:2.24.0'
+    implementation 'org.apache.logging.log4j:log4j-core:2.24.2'
+	implementation 'org.apache.logging.log4j:log4j-slf4j-impl:2.24.2'
 
-	testImplementation 'org.junit.jupiter:junit-jupiter-api:5.11.0'
-	testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.11.0'
-	testImplementation 'org.mockito:mockito-core:5.12.0'
+	testImplementation 'org.junit.jupiter:junit-jupiter-api:5.11.3'
+	testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.11.3'
+	testImplementation 'org.mockito:mockito-core:5.14.2'
 }
 
 test {
